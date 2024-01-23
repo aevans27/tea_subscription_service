@@ -17,9 +17,9 @@ class Api::V1::CustomersController < ApplicationController
                 "address": new_customer.address
               }
             }
-          }, email: 201
+          }, status: 201
       else
-        render json: {errors: "Empty fields"}, email: 404
+        render json: {errors: "Empty fields"}, status: 404
       end
     end
   end

@@ -1,8 +1,8 @@
 class Api::V1::SubscriptionsController < ApplicationController
   def index
-    if params[:customer_id].present?
-      customer = Customer.find(params[:customer_id])
-      if customer
+    # if params[:customer_id].present?
+      if Customer.exists?(id: params[:customer_id])
+        customer = Customer.find(params[:customer_id])
         if customer.subscriptions.count > 0
           customer_subs = []
           customer.subscriptions.each do |subscript|
@@ -25,26 +25,28 @@ class Api::V1::SubscriptionsController < ApplicationController
         else
           render json: {
             "data": {
-              "subcriptions": []
+              "attributes": {
+                "subscriptions": []
+              }
             }
           }, status: 200
         end
       else
         render json: {errors: "Customer doesn't exist"}, status: 404
       end
-    else
-      render json: {errors: "Empty fields"}, status: 404
-    end
+    # else
+    #   render json: {errors: "Empty fields"}, status: 404
+    # end
   end
 
   def create
-    existing_sub = Subscription.find_by(title: params[:title])
-    if existing_sub
+    if Subscription.exists?(title: params[:title])
       render json: {errors: "Subscription already exists"}, status: 404
     else
+      existing_sub = Subscription.find_by(title: params[:title])
       if params[:title].present? && params[:price].present? && params[:status].present? && params[:frequency].present? && params[:customer_id].present?
-        customer = Customer.find(params[:customer_id])
-        if customer
+        if Customer.exists?(params[:customer_id])
+          customer = Customer.find(params[:customer_id])
           new_sub = customer.subscriptions.create(title: params[:title], price: params[:price], status: params[:status], frequency: params[:frequency])
           render json: {
             "data": {
