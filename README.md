@@ -18,3 +18,10 @@
 
 ## Project Description
 Intermission work post Mod 3, creates backend to create users, subscriptions, and teas.  Extension includes usage of a external api.
+
+
+## End points
+- Customer creation `/api/v1/customer`requires first_name, last_name, email, and address in the body
+- Subscription creation `/api/v1/customers` requires title, price, status, frequency, and the user id in the body
+- Subscription deletion `/api/v1/customers/:customer_id/subscriptions/:sub_id`
+- Find customers subscriptions `/api/v1/customers/customer_id/subscriptions`
