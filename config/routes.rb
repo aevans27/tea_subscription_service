@@ -17,6 +17,8 @@ Rails.application.routes.draw do
       post "/customers" => "customers#create"
       # get "/subscriptions" => "subscriptions#index"
       post "/subscriptions" => "subscriptions#create"
+      post "/teas" => "teas#create"
+      patch "/subscription_teas" => "teas#sub_change"
     end
   end
 end
